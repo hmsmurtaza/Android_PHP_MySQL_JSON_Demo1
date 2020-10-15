@@ -83,16 +83,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
+            String name = mUserName.getText().toString();
+            String password = mPassword.getText().toString();
+            String confirmPassword = mConfirmPassword.getText().toString();
+            String male = mRadioButtonMale.getText().toString();
+            String female = mRadioButtonFemale.getText().toString();
+
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "" +
-                        mUserName.getText().toString() + " " +
-                        mPassword.getText().toString() + " " +
-                        mConfirmPassword.getText().toString() + " " +
-                        mRadioButtonMale.getText().toString() + " " +
-                        mRadioButtonFemale.getText().toString() + " " +
+                         name + " " +
+                         password + " " +
+                         confirmPassword + " " +
+                         male + " " +
+                        female + " " +
                         spinnerSelectedItemText + " " +
                         " checked text " + text, Toast.LENGTH_SHORT).show();
+                new ServerData().execute(name, password, confirmPassword, male, female, spinnerSelectedItemText);
             }
         });
     }
@@ -124,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         protected String doInBackground(String... strings) {
             try {
-                url = new URL("http://192.168.122.1/skilled-person/show_users.php");
+                url = new URL("http://192.168.10.2/skilled-person/show_users.php");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -162,11 +169,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         stringBuilder.append(line);
                     }
                     return (stringBuilder.toString());
+                } else {
+                    return "Unsuccessful";
                 }
+
+
             } catch (IOException e) {
                 e.printStackTrace();
+                return "exception";
+            } finally {
+                httpURLConnection.disconnect();
             }
-            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressDialog.dismiss();
+
+            if (result.equalsIgnoreCase("true")) {
+                Toast.makeText(MainActivity.this, "successful", Toast.LENGTH_SHORT).show();
+            } else if (result.equalsIgnoreCase("false")) {
+                Toast.makeText(MainActivity.this, "failed, enter correct email or password", Toast.LENGTH_SHORT).show();
+            } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {
+                Toast.makeText(MainActivity.this, "Oops! something went wrong, Connection problem", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
