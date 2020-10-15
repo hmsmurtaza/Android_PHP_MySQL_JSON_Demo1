@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Android_PHP_MySQL_JSON_Demo1</string>
+
+    <string-array name="user_types">
+        <item>Admin</item>
+        <item>User</item>
+        <item>Skilled Person</item>
+    </string-array>
+</resources>

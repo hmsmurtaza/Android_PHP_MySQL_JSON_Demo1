@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Android_PHP_MySQL_JSON_Demo1"
