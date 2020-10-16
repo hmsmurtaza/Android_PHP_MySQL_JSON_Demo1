@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         protected String doInBackground(String... strings) {
             try {
-                url = new URL("http://192.168.10.2/skilled-person/show_users.php");
+                url = new URL("http://192.168.122.1/skilled-person/show_users.php");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Uri.Builder builder = new Uri.Builder();
                 builder.appendQueryParameter("name", strings[0]);
                 builder.appendQueryParameter("password", strings[1]);
-                builder.appendQueryParameter("confirm_assword", strings[2]);
+                builder.appendQueryParameter("confirm_password", strings[2]);
                 builder.appendQueryParameter("gender", strings[3]);
                 builder.appendQueryParameter("customer_type", strings[4]);
                 builder.appendQueryParameter("location", strings[5]);
@@ -196,5 +196,4 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
     }
-
 }
