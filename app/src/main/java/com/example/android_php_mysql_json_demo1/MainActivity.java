@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             try {
                 httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
@@ -172,8 +173,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 } else {
                     return "Unsuccessful";
                 }
-
-
             } catch (IOException e) {
                 e.printStackTrace();
                 return "exception";
