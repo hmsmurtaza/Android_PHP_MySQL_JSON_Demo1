@@ -138,12 +138,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             try {
                 httpURLConnection = (HttpURLConnection) url.openConnection();
+/*
                 httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
+*/
 
-                Uri.Builder builder = new Uri.Builder();
+                /*Uri.Builder builder = new Uri.Builder();
                 builder.appendQueryParameter("name", strings[0]);
                 builder.appendQueryParameter("password", strings[1]);
                 builder.appendQueryParameter("confirm_password", strings[2]);
@@ -156,19 +158,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 bufferedWriter.write(query);
                 bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
+*/
                 httpURLConnection.connect();
-
                 int responseCode = httpURLConnection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     InputStream inputStream = httpURLConnection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
                     StringBuilder stringBuilder = new StringBuilder();
                     String line;
                     while ((line = bufferedReader.readLine()) != null) {
                         stringBuilder.append(line);
                     }
+                    bufferedReader.close();
                     return (stringBuilder.toString());
                 } else {
                     return "Unsuccessful";
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         protected void onPostExecute(String result) {
             progressDialog.dismiss();
-
+            Toast.makeText(MainActivity.this, "Result: " + result.toString(), Toast.LENGTH_SHORT).show();
             if (result.equalsIgnoreCase("true")) {
                 Toast.makeText(MainActivity.this, "successful", Toast.LENGTH_SHORT).show();
             } else if (result.equalsIgnoreCase("false")) {
